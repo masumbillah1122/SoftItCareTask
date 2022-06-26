@@ -19,6 +19,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get("/", function (req, res) {
   res.status(200).send({ msg: "Welcome to Soft It Care app." });
 });
+
 //Main Router 
 app.use("/api/v2", mainRouter);
 // catch 404 and forward to error handler
@@ -48,10 +49,10 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
 //Database Connection
 const uri =
   "mongodb+srv://masumhaque:169572274@cluster0.wnhig.mongodb.net/SoftItCareDatabase?retryWrites=true&w=majority";
-
 mongoose
   .connect(uri)
   .then(() => {

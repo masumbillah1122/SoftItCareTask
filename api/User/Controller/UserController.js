@@ -10,7 +10,7 @@ const Features = require('../../utils/Features');
 
 class UserController {
     async list(req, res, next) {
-        const resultPerPage = 5;
+        const limit = 5;
         try {
             const userCount = await User.countDocuments();
             const feature = new Features(
@@ -22,7 +22,7 @@ class UserController {
                 phone: req.query.phone,
                 email: req.body.email,
               })
-              .pagination(resultPerPage)
+              .pagination(limit)
               .exec();
             const users = await feature.query;
             if (!users.length) {
@@ -216,7 +216,6 @@ class UserController {
     }
     async unblockUser(req, res, next) {
         try {
-            //
             const user = await User.findOne({
                 name: req.query.username,
             });

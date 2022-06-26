@@ -8,7 +8,6 @@ const ProductRoute = require("./product/Route/index");
 const RoleRoute = require("./Role/Route/index");
 const AuthRoute = require("./Auth/Route//index");
 
-
 router.use("/admin", AdminRoute); 
 router.use("/users", UserRoute);
 router.use("/categories", CategoryRoute);

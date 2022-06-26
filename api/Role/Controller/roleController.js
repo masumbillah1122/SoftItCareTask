@@ -24,7 +24,7 @@ const permissions = [
         "role"
     ]
 
-class roleController {
+class RoleController {
     async list(req, res, next){
         try{
             const role = await Role.find();
@@ -137,4 +137,4 @@ class roleController {
     }
 }
 
-module.exports = new roleController();
+module.exports = new RoleController();

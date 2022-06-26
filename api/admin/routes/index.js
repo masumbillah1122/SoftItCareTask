@@ -20,7 +20,5 @@ router.get("/", AdminController.Index);
 router.get("/show/:id", AdminController.Show);
 router.post("/create", AdminController.AddNewAdmin);
 router.put("/update/:id", AdminController.UpdateAccount);
-// router.post("/password-changes/:id", AdminController.UpdatePassword);
-
 
 module.exports = router;

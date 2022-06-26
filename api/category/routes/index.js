@@ -1,6 +1,6 @@
-const CategoryController = require("../controller/categoryController");
 const express = require("express");
 const router = express.Router();
+const CategoryController = require("../controller/categoryController");
 
 const multer = require('multer');
 const path = require('path');

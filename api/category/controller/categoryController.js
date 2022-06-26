@@ -6,7 +6,7 @@ const Validator = require("validatorjs");
 const mongoose = require("mongoose");
 const Features = require("../../utils/Features");
 
-class category {
+class CategoryController {
     async list(req, res, next) {
         const limit = 5;
         try {
@@ -147,4 +147,4 @@ class category {
 
 }
 
-module.exports = new category();
+module.exports = new CategoryController();

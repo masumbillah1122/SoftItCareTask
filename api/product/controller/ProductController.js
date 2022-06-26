@@ -50,7 +50,6 @@ class ProductController{
     }
     async create(req, res, next){
         try {
-            //req.files
             const validate = new Validator(req.body, {
               name: "string|min:2|max:200|alpha",
               slug: "string",
