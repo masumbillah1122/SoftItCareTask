@@ -2,6 +2,7 @@ const ERROR_LIST = require("../helpers/errorList");
 const ERROR_MESSAGE = require("../helpers/errorMessage");
 const ResponseStatus = require("../helpers/responseStatus");
 const User = require('../models/User');
+const sendMail = require('../utils/sendMail');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const Validator = require('validatorjs');
@@ -63,6 +64,7 @@ class AuthController {
       account.token = token;
       await account.save();
 
+
       return res
         .status(ERROR_LIST.HTTP_OK)
         .send(ResponseStatus.success(ERROR_MESSAGE.HTTP_OK, token));
@@ -75,6 +77,59 @@ class AuthController {
         );
     }
   }
+
+// Forgot password
+
+  async forgotPassword(req, res, next) {
+
+      const user = await User.findOne({ email: req.body.email });
+      if (!user) {
+        return res
+          .status(ERROR_LIST.HTTP_NOT_FOUND)
+          .send(ResponseStatus.failure(ERROR_MESSAGE.HTTP_NOT_FOUND, 404));
+      }
+
+      //Get ResetPassword Token
+      const resetToken = user.getResetToken(20);
+
+      await user.save({
+        validateBeforeSave: false,
+      });
+
+    const resetPasswordUrl = `${req.protocol}://${req.get(
+      "host"
+    )}/password/reset/${resetToken}`;
+
+    const message = `Your password reset token is :- \n\n${resetPasswordUrl}`;
+
+    try {
+      await sendMail({
+        email: user.email,
+        subject: `Password Recovery`,
+        message,
+      });
+
+      return res
+        .status(ERROR_LIST.HTTP_OK)
+        .send(ResponseStatus.success({
+          message: `Email sent to ${user.email} successfully`,
+        }));
+      
+    } catch (error) {
+       user.resetPasswordToken = undefined;
+       user.resetPasswordTime = undefined;
+
+       await user.save({
+         validateBeforeSave: false,
+       });
+      
+      return res
+        .status(ERROR_LIST.HTTP_INTERNAL_SERVER_ERROR)
+        .send(ResponseStatus.failure(ERROR_MESSAGE.HTTP_INTERNAL_SERVER_ERROR, {}));
+  }
+
+  }
+
   async auth(req, res, next) {
     const temp = req.headers.authorization;
     const token = temp.split(" ");
@@ -82,7 +137,6 @@ class AuthController {
     console.log(decode.id);
     const tempUser = await User.findById(decode.id);
     if (tempUser.token === token[1]) {
-      console.log("jamal");
       next();
     } else {
       console.log("err");
