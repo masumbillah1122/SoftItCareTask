@@ -64,7 +64,6 @@ class AuthController {
       account.token = token;
       await account.save();
 
-
       return res
         .status(ERROR_LIST.HTTP_OK)
         .send(ResponseStatus.success(ERROR_MESSAGE.HTTP_OK, token));
@@ -79,9 +78,7 @@ class AuthController {
   }
 
 // Forgot password
-
   async forgotPassword(req, res, next) {
-
       const user = await User.findOne({ email: req.body.email });
       if (!user) {
         return res
@@ -127,8 +124,7 @@ class AuthController {
         .status(ERROR_LIST.HTTP_INTERNAL_SERVER_ERROR)
         .send(ResponseStatus.failure(ERROR_MESSAGE.HTTP_INTERNAL_SERVER_ERROR, {}));
   }
-
-  }
+}
 
   async auth(req, res, next) {
     const temp = req.headers.authorization;

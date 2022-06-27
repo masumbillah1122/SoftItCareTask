@@ -18,7 +18,7 @@ const upload = multer({ storage });
 
 router.get("/", AdminController.Index);
 router.get("/show/:id", AdminController.Show);
-router.post("/create", AdminController.AddNewAdmin);
+router.post("/create", upload.single("image"), AdminController.AddNewAdmin);
 router.put("/update/:id", AdminController.UpdateAccount);
 
 module.exports = router;

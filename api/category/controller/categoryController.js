@@ -8,17 +8,17 @@ const Features = require("../../utils/Features");
 
 class CategoryController {
     async list(req, res, next) {
-        const limit = 5;
+        const resultPerPage = 5;
         try {
             const categoryCount = await Category.countDocuments();
             const feature = new Features(
-              Category.find({ _id: mongoose.Types.ObjectId(req.params.id) }),
-              req.query
+                Category.find({ _id: mongoose.Types.ObjectId(req.params.id) }),
+                req.query
             )
-                .search()
-                .filter
-                .pagination(limit)
-                .exec();
+            .search()
+            .filter
+            .pagination(resultPerPage)
+            .exec();
             const categories = await feature.query;
             if (!categories.length) {
               return res

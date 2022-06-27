@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
         next(null, 'public/upload/products')
     },
     filename: (req, file, next) => {
-        next(null, 'coverImage_'+Date.now()+path.extname(file.originalname));
+        next(null, 'image_'+Date.now()+path.extname(file.originalname));
     }
 });
 
@@ -17,7 +17,7 @@ const upload = multer({storage});
 
 router.get('/', ProductController.index);
 router.get('/show/:id', ProductController.show);
-router.post('/create', upload.single('coverImage'), ProductController.create);
+router.post('/create', upload.single('image'), ProductController.create);
 router.put('/update/:id', ProductController.update);
 router.delete('/remove/:id', ProductController.remove);
 

@@ -10,7 +10,7 @@ const Features = require('../../utils/Features');
 
 class UserController {
     async list(req, res, next) {
-        const limit = 5;
+        const resultPerPage = 5;
         try {
             const userCount = await User.countDocuments();
             const feature = new Features(
@@ -22,7 +22,7 @@ class UserController {
                 phone: req.query.phone,
                 email: req.body.email,
               })
-              .pagination(limit)
+              .pagination(resultPerPage)
               .exec();
             const users = await feature.query;
             if (!users.length) {

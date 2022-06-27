@@ -9,16 +9,16 @@ const Features = require('../../utils/Features');
 
 class ProductController{
     async index(req, res, next) {
-        const limit = 5;
+        const resultPerPage = 5;
         try {
             const productCount = await Product.countDocuments();
             const feature = new Features(
-                Product.find({ _id: mongoose.Types.ObjectId(req.params.id) }),
-                req.query)
-                .search()
-                .filter
-                .pagination(limit)
-                .exec()
+              Product.find({ _id: mongoose.Types.ObjectId(req.params.id) }),
+              req.query
+            )
+              .search()
+              .filter.pagination(resultPerPage)
+              .exec();
             const products = await feature.query;
             if(!products.length){
                 return res

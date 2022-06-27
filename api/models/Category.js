@@ -2,6 +2,11 @@ const { Schema, model } = require("mongoose");
 
 const categorySchema = new Schema(
   {
+    indexId: {
+      type: Number,
+      trim: true,
+      default: 0,
+    },
     name: {
       type: String,
       required: true,
@@ -31,11 +36,6 @@ const categorySchema = new Schema(
       trim: true,
       default: true,
       enum: [true, false],
-    },
-    indexId: {
-      type: Number,
-      trim: true,
-      default: 0,
     },
     createdBy: {
       type: Schema.Types.ObjectId,

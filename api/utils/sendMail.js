@@ -9,10 +9,6 @@ const sendMail = async (options) => {
       user: process.env.SMPT_MAIL,
       password: process.env.SMPT_PASSWORD,
     },
-
-    //   service: process.env.SMPT_SERVICE,
-    //   providerauth: { user: process.env.SMPT },
-    //   password: process.env.SMPT_PASSWORD,
   });
 
   const mailOptions = {
